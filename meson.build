@@ -1,10 +1,15 @@
 project('advent-of-code', 'c',
-  version : '0.1',
+  version : '0.2',
   default_options : ['warning_level=3'])
+project_description = 'Advent of Code in C by Kyohans'
 
 incdir = include_directories('include')
+subdir('src')
+subdir('src/2021')
 
-exe = executable('advent_of_code', 'advent_of_code.c',
+exe = executable(
+  'advent_of_code', 
+  sources : ['advent_of_code.c', sources],
   include_directories : incdir,
   install : true)
 
