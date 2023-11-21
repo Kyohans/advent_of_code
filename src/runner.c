@@ -22,7 +22,7 @@ void run_day(const char * year, const char * day) {
         exit(EXIT_FAILURE);
     }
 
-    if(year_idx > NUM_YEARS) {
+    if(year_idx >= NUM_YEARS) {
         fprintf(stderr, "Invalid year. Year must be between 2021-2023");
         exit(EXIT_FAILURE);
     }
@@ -38,7 +38,7 @@ void run_day(const char * year, const char * day) {
 
 void run_year(const char * year) {
     int year_idx = get_year_index(year);
-    for(size_t i = 0; i < NUM_DAYS_BY_YEAR[year_idx]; i++) {
+    for(size_t i = 1; i <= NUM_DAYS_BY_YEAR[year_idx]; i++) {
         char day[BUFFER_SIZE];
         sprintf(day, "%lu", i);
         run_day(year, day);

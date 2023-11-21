@@ -10,11 +10,11 @@ int window_sum(int *);
 void day01_2021(const char * filename) {
     printf("Day 1\n");
     FILE * p1 = fopen(filename, "r");
-    printf("Part 1: %d\n", part1(p1));
+    printf("\tPart 1: %d\n", part1(p1));
     fclose(p1);
 
     FILE * p2 = fopen(filename, "r");
-    printf("Part 2: %d\n", part2(p2));
+    printf("\tPart 2: %d\n", part2(p2));
     fclose(p2);
 }
 

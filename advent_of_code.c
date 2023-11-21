@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
         }
 
-        if(day[0] == '@') {
+        if(day[0] == '\0') {
             run_year(year);
         } else {
             run_day(year, day);
