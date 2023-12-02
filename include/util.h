@@ -3,6 +3,7 @@
 
 #define SESSION_KEY "../.aocrc"
 #define BUFFER_SIZE 256
+#define TESTING 0
 
 #include <stdio.h>
 #include <stdlib.h>

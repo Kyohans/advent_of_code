@@ -1,4 +1,4 @@
 
 sources += files(
-  '01.c'
+  '01.c',
 )

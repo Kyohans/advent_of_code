@@ -5,7 +5,7 @@ project_description = 'Advent of Code in C by Kyohans'
 
 incdir = include_directories('include')
 subdir('src')
-subdir('src/2021')
+subdir('src/2023')
 
 exe = executable(
   'advent_of_code', 
