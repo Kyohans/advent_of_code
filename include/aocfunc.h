@@ -8,7 +8,7 @@
 #define NUM_YEARS 1
 
 // 2023: 1
-const size_t NUM_DAYS_BY_YEAR[NUM_YEARS] = {1};
+const size_t NUM_DAYS_BY_YEAR[NUM_YEARS] = {2};
 
 static void (**functions[])(const char *) = {
   year2023_solutions

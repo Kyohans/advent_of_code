@@ -2,7 +2,7 @@
 #define _2023_H
 
 void day01_2023(const char *);
-// void day02_2023(const char *);
+void day02_2023(const char *);
 // void day03_2023(const char *);
 // void day04_2023(const char *);
 // void day05_2023(const char *);
@@ -28,7 +28,8 @@ void day01_2023(const char *);
 // void day25_2023(const char *);
 
 static void (*year2023_solutions[])(const char *) = {
-  &day01_2023,
+  day01_2023,
+  day02_2023
 };
 
 #endif

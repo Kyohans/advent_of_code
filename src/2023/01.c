@@ -35,12 +35,14 @@ void day01_2023(const char * filename) {
 
     if(p1 == NULL) exit(EXIT_FAILURE);
     printf("Part 1: %d\n", part1_012023(p1));
+    fclose(p1);
 
     if(TESTFILEP2) p2 = fopen(TESTFILEP2, "r");
     else p2 = fopen(filename, "r");
 
     if(p2 == NULL) exit(EXIT_FAILURE);
     printf("Part 2: %d\n", part2_012023(p2));
+    fclose(p2);
 }
 
 int part1_012023(FILE * fp) {
