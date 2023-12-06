@@ -5,8 +5,8 @@ void day01_2023(const char *);
 void day02_2023(const char *);
 void day03_2023(const char *);
 void day04_2023(const char *);
-// void day05_2023(const char *);
-// void day06_2023(const char *);
+void day05_2023(const char *);
+void day06_2023(const char *);
 // void day07_2023(const char *);
 // void day08_2023(const char *);
 // void day09_2023(const char *);
@@ -32,6 +32,8 @@ static void (*year2023_solutions[])(const char *) = {
   day02_2023,
   day03_2023,
   day04_2023,
+  day05_2023,
+  day06_2023,
 };
 
 #endif
