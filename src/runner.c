@@ -7,13 +7,18 @@
 size_t get_year_index(const char *);
 
 void run_day(const char * year, const char * day) {
-    if(fetch_input(year, day) != 0) {
-        fprintf(stderr, "Fetch input failed");
-        exit(EXIT_FAILURE);
-    }
-
     char filename[BUFFER_SIZE];
-    sprintf(filename, "/tmp/year%s_%s.input", year, day);
+
+    if(!TESTING) {
+        if(fetch_input(year, day) != 0) {
+            fprintf(stderr, "Fetch input failed");
+            exit(EXIT_FAILURE);
+        }
+
+        sprintf(filename, "/tmp/year%s_%s.input", year, day);
+    } else {
+        sprintf(filename, "using test file...");
+    }
     
     size_t year_idx = get_year_index(year);
     size_t day_idx = atoi(day);
