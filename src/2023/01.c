@@ -74,123 +74,67 @@ int part2_012023(FILE * fp) {
     int sum = 0;
     while(fgets(line, sizeof(line), fp) != 0) {
         int len = strlen(line);
-        int ileftnums[NUMSSIZE];
-        int irightnums[NUMSSIZE];
-        for(int i = 0; i < NUMSSIZE; i++) ileftnums[i] = -1, irightnums[i] = -1;
-
-        char temp[len + 1];
-        strncpy(temp, line, len);
-        temp[len] = '\0';
+        int inums[NUMSSIZE];
+        for(int i = 0; i < NUMSSIZE; i++) inums[i] = -1;
 
         for(int n = 0; n < NUMSSIZE; n++) {
-            const char * found = strstr(temp, nums[n]);
+            const char * found = strstr(line, nums[n]);
             if(found != NULL) {
-                ileftnums[n] = found - temp;
+                inums[n] = found - line;
             }
+            printf("n: %d -- %s -- %d\n", n+1, nums[n], inums[n]);
         }
 
-        for(int n = 0; n < NUMSSIZE; n++) {
-            int left = 0, right = strlen(nums[n]);
-            int i = len - 1;
-
-            while(i >= 0) {
-                char buf[len];
-                substr(buf, temp, left + i, right);
-                char * found = strstr(buf, nums[n]);
-                if(found != NULL) irightnums[n] = i;
-                i--;
-            }
-        }
-
-        char rev[len];
-        strcpy(rev, line);
+        char rev[BUFFER_SIZE];
+        strncpy(rev, line, sizeof(rev));
         strrev(rev);
+        printf("Reverse string: %s\n", rev);
 
         char * lptr = strpbrk(line, "123456789");
         char * rptr = strpbrk(rev, "123456789");
+        if(lptr) printf("Left digit found: %s\n", lptr);
+        else printf("Left digit not found\n");
+
+        if(rptr) printf("Right digit found: %s\n", rptr);
+        else printf("Right digit not found\n");
+
+        int lefti = -1, righti = -1;
+        for(int i = 0; i < NUMSSIZE; i++) {
+            if(lefti == -1 || lefti > inums[i]) {
+                lefti = (inums[i] == -1) ? -1 : i;
+                righti = (inums[i] == -1) ? -1 : i;
+            } else {
+                righti = (inums[i] == -1) ? -1 : i;
+            }
+        }
 
         int lnum = 0;
         int rnum = 0;
-        if(lptr != NULL) lnum = lptr[0] - '0';
-        if(rptr != NULL) rnum = rptr[0] - '0';
 
-        int lmin = INT_MAX, rmax = -1;
-        for(int n = 0; n < NUMSSIZE; n++) {
-            if(!lptr || (ileftnums[n] != -1 && ileftnums[n] < lptr - line)) lnum = n + 1;
-            else lnum = (lmin < ileftnums[n]) ? lnum : n + 1;
-            if(!rptr || (irightnums[n] != -1 && irightnums[n] < rptr - rev)) rnum = n + 1;
-            else rnum = (rmax > irightnums[n]) ? rnum : n + 1;
-
-            lmin = MIN(lmin, ileftnums[n]);
-            rmax = MAX(rmax, irightnums[n]);
+        if(lptr != NULL) {
+            printf("Left pointer should be at index: %lu\n", lptr - line);
+            lnum = (lptr - line < lefti) ? lptr[0] - '0' : inums[lefti];
+        } else {
+            lnum = inums[lefti];
+            printf("%d, %s\n", inums[lefti], nums[lefti]);
         }
 
+        if(rptr != NULL) {
+            printf("Right pointer should be at index: %lu\n", (len - (rptr - rev)));
+            rnum = (len - (rptr - rev) > righti) ? rptr[0] - '0' : inums[righti];
+        } else {
+            printf("%d: %d, %s\n", righti, inums[righti], nums[righti]);
+            rnum = inums[righti];
+        }
 
-        int num = 0 * 10 + lnum;
-        num = num * 10 + rnum;
+        printf("Line: %s\nLeft: %d, Right: %d\n", line, lnum, rnum);
+
+        int num = lnum * 10 + rnum;
         sum += num;
-
-        printf("Left: %d, Right: %d, Num: %d, Sum: %d\n", lnum, rnum, num, sum);
     }
 
     return sum;
 }
-
-/* TODO: Still need to complete solution */
-// int part2_012023(FILE * fp) {
-//     char line[BUFFER_SIZE];
-//
-//     int sum = 0;
-//     int lnum = -1, rnum = -1;
-//     while(fgets(line, sizeof(line), fp) != 0) {
-//         int start_idx[NUMSSIZE] = {-1, -1, -1, -1, -1, -1, -1, -1, -1};
-//         int end_idx[NUMSSIZE] = {-1, -1, -1, -1, -1, -1, -1, -1, -1};
-//         int len = strlen(line);
-//
-//         search_for_num(line, start_idx, true);
-//         search_for_num(line, end_idx, false);
-//
-//         int ldigit = -1;
-//         for(int i = 0; i < len; i++) {
-//             if(ischrdigit(line[i])) {
-//                 ldigit = i;
-//                 break;
-//             }
-//         }
-//
-//         int rdigit = -1;
-//         for(int i = len - 1; i >= 0; i--) {
-//             if(ischrdigit(line[i])) {
-//                 rdigit = i;
-//                 break;
-//             }
-//         }
-//
-//         int min_start = INT_MAX, min_end = INT_MAX;
-//         int starti = -1, endi = -1;
-//         for(int i = 0; i < NUMSSIZE; i++) {
-//             if(min_start > start_idx[i]) {
-//                 min_start = start_idx[i];
-//                 starti = i;
-//             }
-//
-//             if(min_end > end_idx[i]) {
-//                 min_end = end_idx[i];
-//                 endi = i;
-//             }
-//         }
-//
-//         if(ldigit >= 0 && ldigit < min_start) lnum = line[ldigit] - '0';
-//         else lnum = starti + 1;
-//
-//         if(rdigit >= 0 && rdigit < min_end) rnum = line[rdigit] - '0';
-//         else rnum = endi + 1;
-//
-//         sum = sum * 10 + lnum;
-//         sum = sum * 10 + rnum;
-//     }
-//     return sum;
-// }
 
 // From GFG
 void strrev(char * str) {
