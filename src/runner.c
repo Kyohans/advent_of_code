@@ -32,18 +32,13 @@ void run_day(const char * year, const char * day) {
         exit(EXIT_FAILURE);
     }
 
-    if(day_idx > NUM_DAYS_BY_YEAR[year_idx]) {
-        fprintf(stderr, "Solution for day %lu for year %s has not been completed yet!\n", day_idx, year);
-        return;
-    }
-
     functions[year_idx][day_idx - 1](filename);
     cleanup_file(filename);
 }
 
 void run_year(const char * year) {
     int year_idx = get_year_index(year);
-    for(size_t i = 1; i <= NUM_DAYS_BY_YEAR[year_idx]; i++) {
+    for(size_t i = 1; i <= 25; i++) {
         char day[BUFFER_SIZE];
         sprintf(day, "%lu", i);
         run_day(year, day);
@@ -52,7 +47,12 @@ void run_year(const char * year) {
 
 void run_all(void) {
     printf("Running all Advent Of Code years\n");
-    return;
+    for(int y = 0; y < NUM_YEARS; y++) {
+        char curr[BUFFER_SIZE/6];
+        sprintf(curr, "%d", STARTING_YEAR + y);
+        printf("-- AOC Year %s\n", curr);
+        run_year(curr);
+    }
 }
 
 size_t get_year_index(const char * year) {
