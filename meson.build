@@ -1,5 +1,5 @@
 project('advent-of-code', 'c',
-  version : '0.6.1',
+  version : '0.6.2',
   default_options : ['warning_level=3'])
 project_description = 'Advent of Code in C by Kyohans'
 

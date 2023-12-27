@@ -11,18 +11,11 @@
 #define TESTFILEP2 "../src/2023/test/day01_2"
 
 #define NUMSSIZE 9
-#define MAXNUMLEN 5
-
-#define MAX(a, b) (a > b) ? a : b;
-#define MIN(a, b) (a < b && a >= 0 && b >= 0) ? a : b;
 
 static char * nums[NUMSSIZE] = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
 
 int part1_012023(FILE *);
 int part2_012023(FILE *);
-void strrev(char *);
-void substr(char *, char *, int, int);
-void search_for_num(char *, int *, bool);
 
 void day01_2023(const char * filename) {
     printf("-- Day 01 - 2023 --\n");
@@ -129,48 +122,4 @@ int part2_012023(FILE * fp) {
     }
 
     return sum;
-}
-
-// From GFG
-void strrev(char * str) {
-    if (!str) {
-        return;
-    }
-
-    int i = 0;
-    int j = strlen(str) - 1;
-    while (i < j) {
-        char c = str[i];
-        str[i] = str[j];
-        str[j] = c;
-        i++;
-        j--;
-    }
-}
-
-void substr(char * dest, char * src, int offset, int len) {
-    strncpy(dest, src+offset, len);
-}
-
-void search_for_num(char * line, int idx[], bool at_start) {
-    int incdec = (at_start) ? 1 : -1;
-
-    int len = strlen(line);
-    int i = (at_start) ? 0 : len - 1;
-    while(i >= 0 && i < len) {
-        for(int n = 0; n < NUMSSIZE; n++) {
-            int num_left = 0;
-            int num_right = strlen(nums[n]) - 1;
-
-            while(num_right < len) {
-                char buf[strlen(nums[n])];
-                if(strcmp(buf, nums[n]) == 0) idx[n] = num_left;
-
-                num_left++;
-                num_right++;
-            }
-        }
-
-        i += incdec;
-    }
 }
