@@ -8,11 +8,7 @@
 #define MAXNUM 100
 #define DELIM ":|\n"
 
-#if TESTING
 #define TESTFILE "../src/2023/test/day04"
-#else
-#define TESTFILE NULL
-#endif
 
 int count_nums(int *);
 int follow_rules(int *, int);
@@ -22,15 +18,11 @@ int part2_042023(FILE *);
 void day04_2023(const char * filename) {
     printf("-- Day 4\n");
 
-    FILE * p1, * p2;
-
-    if(TESTFILE) p1 = fopen(TESTFILE, "r");
-    else p1 = fopen(filename, "r");
+    FILE * p1 = fopen((TESTING) ? TESTFILE : filename, "r");
     printf("Part 1: %d\n", part1_042023(p1));
     fclose(p1);
 
-    if(TESTFILE) p2 = fopen(TESTFILE, "r");
-    else p2 = fopen(filename, "r");
+    FILE * p2 = fopen((TESTING) ? TESTFILE : filename, "r");
     printf("Part 2: %d\n", part2_042023(p2));
     fclose(p2);
 }
@@ -97,29 +89,27 @@ int part2_042023(FILE * fp) {
 
         char winning_numbers[strlen(token) + 1];
         strncpy(winning_numbers, token, strlen(token));
-        winning_numbers[strlen(token)] = '\0';
 
         token = strtok(NULL, DELIM);
         char numbers[strlen(token) + 1];
         strncpy(numbers, token, strlen(token));
-        numbers[strlen(token)] = '\0';
 
-        char * i = strtok(winning_numbers, " \n");
-        while(i) {
-            if(i) {
-                wnums[atoi(i) - 1] = 1;
-                i = strtok(NULL, " \n");
+        char * w = strtok(winning_numbers, " \n");
+        while(w) {
+            if(w) {
+                wnums[atoi(w) - 1] = 1;
+                w = strtok(NULL, " \n");
             }
         }
 
-        char * j = strtok(numbers, " \n");
-        while(j) {
-            if(j) {
-                if(wnums[atoi(j) - 1] > 0) {
-                    wnums[atoi(j) - 1]++;
+        char * n = strtok(numbers, " \n");
+        while(n) {
+            if(n) {
+                if(wnums[atoi(n) - 1] > 0) {
+                    wnums[atoi(n) - 1]++;
                 }
 
-                j = strtok(NULL, " \n");
+                n = strtok(NULL, " \n");
             }
         }
 
@@ -146,7 +136,7 @@ int count_nums(int * winning_nummbers) {
 int follow_rules(int * cards, int card) {
     if(cards[card] <= 0) return 1;
 
-    int add = cards[card];
+    int add = 1;
     for(int i = 1; i <= cards[card]; i++) {
         add += follow_rules(cards, card + i);
     }
